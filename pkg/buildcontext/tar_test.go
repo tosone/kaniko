@@ -18,7 +18,6 @@ package buildcontext
 
 import (
 	"bytes"
-	"compress/gzip"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -29,6 +28,7 @@ import (
 
 	"github.com/GoogleContainerTools/kaniko/pkg/util"
 	"github.com/GoogleContainerTools/kaniko/testutil"
+	"github.com/klauspost/pgzip"
 )
 
 func TestBuildWithLocalTar(t *testing.T) {
@@ -81,7 +81,7 @@ func TestBuildWithLocalTar(t *testing.T) {
 		}
 		defer invalidTarFile.Close()
 
-		gw := gzip.NewWriter(validTarFile)
+		gw := pgzip.NewWriter(validTarFile)
 		defer gw.Close()
 
 		tw := util.NewTar(gw)

@@ -17,7 +17,6 @@ limitations under the License.
 package integration
 
 import (
-	"compress/gzip"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -25,6 +24,7 @@ import (
 	"time"
 
 	"github.com/GoogleContainerTools/kaniko/pkg/util"
+	"github.com/klauspost/pgzip"
 )
 
 // CreateIntegrationTarball will take the contents of the integration directory and write
@@ -46,7 +46,7 @@ func CreateIntegrationTarball() (string, error) {
 		return "", err
 	}
 
-	gzipWriter := gzip.NewWriter(file)
+	gzipWriter := pgzip.NewWriter(file)
 	defer gzipWriter.Close()
 
 	err = util.CreateTarballOfDirectory(dir, file)

@@ -19,7 +19,6 @@ package util
 import (
 	"archive/tar"
 	"compress/bzip2"
-	"compress/gzip"
 	"fmt"
 	"io"
 	"io/fs"
@@ -32,6 +31,7 @@ import (
 	"github.com/GoogleContainerTools/kaniko/pkg/config"
 	"github.com/docker/docker/pkg/archive"
 	"github.com/docker/docker/pkg/system"
+	"github.com/klauspost/pgzip"
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 )
@@ -302,7 +302,7 @@ func UnpackCompressedTar(path, dir string) error {
 		return err
 	}
 	defer file.Close()
-	gzr, err := gzip.NewReader(file)
+	gzr, err := pgzip.NewReader(file)
 	if err != nil {
 		return err
 	}

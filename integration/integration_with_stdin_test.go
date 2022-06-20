@@ -17,7 +17,6 @@ limitations under the License.
 package integration
 
 import (
-	"compress/gzip"
 	"fmt"
 	"os"
 	"os/exec"
@@ -28,6 +27,7 @@ import (
 
 	"github.com/GoogleContainerTools/kaniko/pkg/util"
 	"github.com/GoogleContainerTools/kaniko/testutil"
+	"github.com/klauspost/pgzip"
 )
 
 func TestBuildWithStdin(t *testing.T) {
@@ -68,7 +68,7 @@ func TestBuildWithStdin(t *testing.T) {
 		}
 		defer tarFile.Close()
 
-		gw := gzip.NewWriter(tarFile)
+		gw := pgzip.NewWriter(tarFile)
 		defer gw.Close()
 
 		tw := util.NewTar(gw)

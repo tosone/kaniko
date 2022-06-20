@@ -42,6 +42,8 @@ require (
 
 require github.com/containerd/containerd v1.6.2
 
+require github.com/klauspost/pgzip v1.2.5 // indirect
+
 require (
 	cloud.google.com/go v0.100.2 // indirect
 	cloud.google.com/go/compute v1.5.0 // indirect

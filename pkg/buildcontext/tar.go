@@ -17,9 +17,10 @@ limitations under the License.
 package buildcontext
 
 import (
-	"compress/gzip"
 	"fmt"
 	"os"
+
+	"github.com/klauspost/pgzip"
 
 	kConfig "github.com/GoogleContainerTools/kaniko/pkg/config"
 	"github.com/GoogleContainerTools/kaniko/pkg/util"
@@ -46,7 +47,7 @@ func (t *Tar) UnpackTarFromBuildContext() (string, error) {
 		logrus.Infof("To simulate EOF and exit, press 'Ctrl+D'")
 		// if launched through docker in interactive mode and without piped data
 		// process will be stuck here until EOF is sent
-		gzr, err := gzip.NewReader(os.Stdin)
+		gzr, err := pgzip.NewReader(os.Stdin)
 		if err != nil {
 			return directory, err
 		}

@@ -19,7 +19,6 @@ package util
 import (
 	"archive/tar"
 	"bytes"
-	"compress/gzip"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -29,6 +28,7 @@ import (
 	"time"
 
 	"github.com/GoogleContainerTools/kaniko/testutil"
+	"github.com/klauspost/pgzip"
 )
 
 var regularFiles = []string{"file", "file.tar", "file.tar.gz"}
@@ -111,7 +111,7 @@ func setUpFilesAndTars(testDir string) error {
 		if err != nil {
 			return err
 		}
-		gzr := gzip.NewWriter(tarFile)
+		gzr := pgzip.NewWriter(tarFile)
 		if err := createTar(testDir, gzr); err != nil {
 			return err
 		}
